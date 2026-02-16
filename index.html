@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTM Sandbox - Testing Page</title>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id=GTM-5TBXTTDW'+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5TBXTTDW');</script>
+    <!-- End Google Tag Manager -->
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 4px solid #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-top: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .pdf-section {
+            margin: 20px 0;
+        }
+        #scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, #007bff, #28a745);
+            width: 0;
+            z-index: 1000;
+        }
+        .spacer { height: 800px; background: linear-gradient(to bottom, transparent, #e9ecef); }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+    <div id="scroll-indicator"></div>
+
+
+    <div class="container">
+        <h1>📊 GTM Sandbox - Test Page</h1>
+        <p>This page is designed to test Google Tag Manager tracking events.</p>
+
+
+        <!-- SECTION 1: Page Visits -->
+        <div class="section">
+            <h2>1. Page Visits</h2>
+            <p>This page load is automatically tracked by GTM.</p>
+            <p><strong>Event to track:</strong> page_view</p>
+        </div>
+
+
+        <!-- SECTION 2: Button Clicks -->
+        <div class="section">
+            <h2>2. Button Clicks - Contact Us</h2>
+            <p>Click the button below and monitor GTM for the click event.</p>
+            <button onclick="trackButtonClick('contact_us')">📧 Contact Us</button>
+            <button onclick="trackButtonClick('learn_more')">📚 Learn More</button>
+            <button onclick="trackButtonClick('subscribe')">🔔 Subscribe</button>
+        </div>
+
+
+        <!-- SECTION 3: Form Submissions -->
+        <div class="section">
+            <h2>3. Form Submissions - Newsletter Sign-up</h2>
+            <form onsubmit="handleFormSubmit(event)">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+                
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required placeholder="Your Name">
+                
+                <label for="interests">Interests (Optional):</label>
+                <textarea id="interests" name="interests" placeholder="Tell us what you're interested in..." rows="3"></textarea>
+                
+                <button type="submit">✉️ Sign Up for Newsletter</button>
+            </form>
+        </div>
+
+
+        <!-- SECTION 4: Scroll Depth -->
+        <div class="section">
+            <h2>4. Scroll Depth Tracking</h2>
+            <p>Scroll down the page to trigger scroll depth events at 25%, 50%, 75%, and 100%.</p>
+            <p>Check the browser console (F12) to see scroll depth events being logged.</p>
+        </div>
+
+
+        <!-- Spacer to enable scroll tracking -->
+        <div class="spacer"></div>
+
+
+        <!-- SECTION 5: PDF Download -->
+        <div class="section">
+            <h2>5. PDF Download</h2>
+            <p>Click the link below to download a PDF and track the download event.</p>
+            <div class="pdf-section">
+                <a href="#" onclick="downloadPDF('technical-specs')">📄 Download Technical Specifications (PDF)</a>
+            </div>
+        </div>
+
+
+        <div class="spacer"></div>
+    </div>
+
+
+    <script>
+        // Initialize dataLayer if it doesn't exist
+        window.dataLayer = window.dataLayer || [];
+
+
+        // 1. Track Button Clicks
+        function trackButtonClick(buttonName) {
+            console.log('Button clicked:', buttonName);
+            window.dataLayer.push({
+                'event': 'button_click',
+                'button_name': buttonName,
+                'timestamp': new Date().toISOString()
+            });
+            alert(`Button clicked: ${buttonName}`);
+        }
+
+
+        // 2. Track Form Submissions
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const formData = {
+                'event': 'form_submission',
+                'form_name': 'newsletter_signup',
+                'email': document.getElementById('email').value,
+                'name': document.getElementById('name').value,
+                'timestamp': new Date().toISOString()
+            };
+            console.log('Form submitted:', formData);
+            window.dataLayer.push(formData);
+            alert('Newsletter signup tracked! Check GTM preview mode.');
+            event.target.reset();
+        }
+
+
+        // 3. Track Scroll Depth
+        let scrollDepthTracked = {
+            '25%': false,
+            '50%': false,
+            '75%': false,
+            '100%': false
+        };
+
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+
+
+            // Update scroll indicator
+            document.getElementById('scroll-indicator').style.width = scrollPercent + '%';
+
+
+            // Track scroll depth
+            if (scrollPercent >= 25 && !scrollDepthTracked['25%']) {
+                trackScrollDepth('25');
+                scrollDepthTracked['25%'] = true;
+            }
+            if (scrollPercent >= 50 && !scrollDepthTracked['50%']) {
+                trackScrollDepth('50');
+                scrollDepthTracked['50%'] = true;
+            }
+            if (scrollPercent >= 75 && !scrollDepthTracked['75%']) {
+                trackScrollDepth('75');
+                scrollDepthTracked['75%'] = true;
+            }
+            if (scrollPercent >= 90 && !scrollDepthTracked['100%']) {
+                trackScrollDepth('100');
+                scrollDepthTracked['100%'] = true;
+            }
+        });
+
+
+        function trackScrollDepth(depth) {
+            console.log(`Scroll depth: ${depth}%`);
+            window.dataLayer.push({
+                'event': 'scroll_depth',
+                'scroll_depth': depth,
+                'timestamp': new Date().toISOString()
+            });
+        }
+
+
+        // 4. Track PDF Downloads
+        function downloadPDF(pdfName) {
+            console.log('PDF download:', pdfName);
+            window.dataLayer.push({
+                'event': 'pdf_download',
+                'pdf_name': pdfName,
+                'timestamp': new Date().toISOString()
+            });
+            // Simulate PDF download
+            alert(`PDF download tracked: ${pdfName}`);
+        }
+
+
+        // Log page view
+        console.log('GTM Sandbox page loaded');
+        window.dataLayer.push({
+            'event': 'page_load',
+            'page_title': document.title,
+            'timestamp': new Date().toISOString()
+        });
+    </script>
+</body>
+</html>
+
+
+
+
